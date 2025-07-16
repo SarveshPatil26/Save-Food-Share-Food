@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="./images/img5.jpg" class="img">
+
+
+        <div class="box">
+
+          <h1>NGO LOGIN</h1>
+          <h3>Name</h3>
+          <input type="text" id="name" placeholder="Enter your NGO">
+        
+          <h3>Address</h3>
+          <input type="text" id="address" placeholder="Address">
+        
+          <h3>Contact Number</h3>
+          <input type="number" id="number" placeholder="Enter your number">
+<!--         
+          <h3>Meals</h3>
+          <input type="meals" id="meals"  placeholder="Meals Available"> -->
+        <br><br>
+
+        <div class="btn">
+          <button id="submit">SUBMIT</button>
+       
+        
+        </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAZXxgKr3WlzgqqGN8iMspNfFevNmgCntA",
+        authDomain: "ngologin-61c2d.firebaseapp.com",
+        databaseURL: "https://ngologin-61c2d-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "ngologin-61c2d",
+        storageBucket: "ngologin-61c2d.appspot.com",
+        messagingSenderId: "585025770776",
+        appId: "1:585025770776:web:204a62f36a774f221c7a6d",
+        measurementId: "G-KQMN32B88Q"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+
+
+
+      import {getDatabase,set,get,ref,child}
+    from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"
+
+    const db=getDatabase();
+
+
+    var name=document.querySelector("#name");
+    var address=document.querySelector("#address");
+    var number=document.querySelector("#number");
+    
+   
+    var submitBtn=document.querySelector("#submit");
+
+
+
+    function SubmitData(){
+       set(ref(db,"NGO/" + name.value),{
+        Name:name.value,
+        Address:address.value,
+        Contact:number.value,
+        
+       }) 
+       .then(()=>{
+        alert("Data added successfully")
+      })
+      .catch((error)=>{
+        alert(error)
+      });
+    }
+
+
+
+    submitBtn.addEventListener('click',SubmitData);
+
+
+
+    const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const twilio = require('twilio');
+
+admin.initializeApp();
+
+exports.sendDataToPhone = functions.database.ref('/source/data').onWrite((change, context) => {
+  const newValue = change.after.val();
+  const targetRef = admin.database().ref('/target/phoneNumber');
+
+  return targetRef.once('value').then((snapshot) => {
+    const phoneNumber = snapshot.val();
+
+    const accountSid = 'your_twilio_account_sid_here';
+    const authToken = 'your_twilio_auth_token_here';
+    const client = twilio(accountSid, authToken);
+
+    return client.messages.create({
+      body: newValue,
+      to: phoneNumber,
+      from: 'your_twilio_phone_number_here'
+    });
+  });
+});
+
+    </script>
+</body>
+</html>

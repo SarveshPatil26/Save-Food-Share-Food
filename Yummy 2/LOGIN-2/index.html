@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  
+  
+  <form
+  action="https://formspree.io/f/mayzkrkl"
+  method="POST"
+
+
+        <div class="box">
+
+          <h1>EVENTS LOGIN</h1>
+
+
+
+          <!-- <h3>Srno</h3>
+          <input type="number" id="sr" placeholder="Enter number"> -->
+
+          <label>Name
+          <input type="text" id="name" name="name" placeholder="Enter your Name">
+        </label>
+         <label>Address
+        <input type="text" id="address" name="address" placeholder="Address">
+        </label>
+        <label>Contact
+          <input type="text" id="Contact" name="Contact" placeholder="Contact">
+          </label>
+
+          <label for="ngo">Select NGO</label>
+          <div class="ngo-options">
+            <label>
+              <input type="radio" name="ngo" value="Akshaya Patra"> Akshaya Patra (Meals needed: 25)
+            </label>
+            <label>
+              <input type="radio" name="ngo" value="Shuddhi"> Shuddhi (Meals needed: 50)
+            </label>
+            <label>
+              <input type="radio" name="ngo" value="Human Service"> Human Service (Meals needed: 75)
+            </label>
+          </div>
+
+        </div>
+
+        <br><br>
+
+        <div class="button-container">
+          <button type="submit" id="submit">SUBMIT</button>
+          <button type="update" id="update">UPDATE</button>
+          <button type="remove" id="remove">REMOVE</button>
+        </div>
+        
+        
+</form>
+
+
+<script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCG17CQ4G0ua6AF1WiABcZVILZEhii-h-I",
+        authDomain: "event-bd4e2.firebaseapp.com",
+        databaseURL:" https//event-bd4e2-default-rtdb.asia-southeast1.firebasedatabase.app/",
+        projectId: "event-bd4e2",
+        storageBucket: "event-bd4e2.appspot.com",
+        messagingSenderId: "615306977344",
+        appId: "1:615306977344:web:842009a18ce71d6e943fa5",
+        measurementId: "G-R8ML5VH12B"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const Analytics = getAnalytics(app);
+    
+
+    import {getDatabase,set,get,update,remove,ref,child}
+    from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"
+
+    const db=getDatabase();
+
+    // var Sr=document.querySelector("#sr");
+    var name=document.querySelector("#name");
+    var address=document.querySelector("#address");
+    var number=document.querySelector("#number");
+    // var meals=document.querySelector("#meals");
+   
+    var submitBtn=document.querySelector("#submit");
+    var updateBtn=document.querySelector("#update");
+    var removeBtn=document.querySelector("#remove");
+    
+
+    function SubmitData(){
+       set(ref(db,"Events/" +name.value),{
+        // Sr:sr.value,
+        Name:name.value,
+        Address:address.value,
+        Contact:number.value,
+        // Meals:meals.value
+       }) 
+       .then(()=>{
+        alert("Data added successfully")
+      })
+      .catch((error)=>{
+        alert(error)
+      });
+    }
+
+    function UpdateData(){
+      update(ref(db,"Events/" +name.value),{
+        // Sr:sr.value,
+
+        Name:name.value,
+        Address:address.value,
+        Contact:number.value,
+        // Meals:meals.value
+
+      })
+
+      .then(()=>{
+        alert("Data updated successfully")
+      })
+      .catch((error)=>{
+        alert(error)
+      });
+    }
+
+    function RemoveData(){
+      remove(ref(db,"Events/" +name.value))
+      .then(()=>{
+        alert("removed");
+      })
+
+      .catch((error)=>{
+        alert(error);
+      });
+      
+    }
+
+
+    submitBtn.addEventListener('click',SubmitData);
+    updateBtn.addEventListener('click',UpdateData);
+    removeBtn.addEventListener('click',RemoveData);
+
+</script>
+
+   
+
+
+
+  
+</body>
+</html>

@@ -1,0 +1,73 @@
+body {
+    background-image: url('./images/event.jpg'); 
+    background-size: cover;
+  }
+  .box {
+    background-color: #ffffff;
+    padding: 2rem;
+    height: fit-content;
+    border-radius: 10px;
+    width: 400px;
+    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+  }
+  
+  
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 2%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .ngo-options {
+    margin-bottom: 1rem;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem; 
+  }
+  
+  button[type="submit"],
+  button[type="update"],
+  button[type="remove"] {
+    flex: 1;
+    margin-right: 0.5rem; 
+    padding: 0.5rem;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  

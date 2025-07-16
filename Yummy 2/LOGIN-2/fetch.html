@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <meta name="viewport" content=
+
+  <link rel="stylesheet" href="fetch.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+</head>
+<body>
+    <div class="fullscreen-image"></div>
+    <link rel="stylesheet" type="text/css" href="fetch.css">
+    
+
+    <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
+       
+        <h1>SAVE FOOD SHARE FOOD<span>.</span></h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Events</a></li>
+          <li><a href="#events">NGO</a></li>
+          <li><a href="#contact">Contact</a></li>
+          
+         
+          <!-- <li><a href="#contact">Contact</a></li> -->
+        </ul>
+
+      </nav><!-- .navbar -->
+
+      <a class="btn-book-a-table" href="#contact">Book a Meal</a>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header><!-- End Header -->
+
+  <div class="container mt-4">
+    <table class="Table ">
+      <thead>
+        <!-- <th>Sno</th> -->
+        <th>Name</th>
+        <th>Address</th>
+        <th>Contact</th>
+        <!-- <th>Meals</th> -->
+      </thead>
+
+      <tbody id="tbody1"></tbody>
+    </table>
+ 
+
+
+  <script type="module">
+    // filling
+
+   var stdNo=0;
+    var tbody=document.getElementById('tbody1');
+    function AddItemToTable(name,address,contact){
+    let trow=document.createElement("tr");
+    let td1=document.createElement('td')
+    let td2=document.createElement('td');
+    let td3=document.createElement('td');
+    // let td4=document.createElement('td');
+    // let td5=document.createElement('td');
+
+     // td1.innerHTML=++stdNo;
+    td1.innerHTML=name;
+    td2.innerHTML=address;
+    td3.innerHTML=contact;
+    // td4.innerHTML=meals;
+
+
+    trow.appendChild(td1);
+    trow.appendChild(td2);
+    trow.appendChild(td3);
+    // trow.appendChild(td4);
+    // trow.appendChild(td5);
+
+
+    tbody.appendChild(trow);
+    }
+
+    function AddALLItemToTable(Student){
+      // stdNo=0;
+      tbody.innerHTML="";
+
+      Student.forEach(element => {
+        AddItemToTable(element.Name,element.Address,element.Contact);
+        
+      });
+
+    }
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyCG17CQ4G0ua6AF1WiABcZVILZEhii-h-I",
+    authDomain: "event-bd4e2.firebaseapp.com",
+    databaseURL: "https://event-bd4e2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "event-bd4e2",
+    storageBucket: "event-bd4e2.appspot.com",
+    messagingSenderId: "615306977344",
+    appId: "1:615306977344:web:842009a18ce71d6e943fa5",
+    measurementId: "G-R8ML5VH12B"
+  };
+
+  // Initialize Firebase
+
+  
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+  import{getDatabase,ref,child,onValue,get}
+  from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+   
+ 
+
+    // get
+    const db=getDatabase();
+    function GetAllData(){
+      const dbRef=ref(db);
+
+      get(child(dbRef,"Events"))
+      .then((snapshot)=>{
+        var students=[];
+        snapshot.forEach(childSnapshot=>{
+          students.push(childSnapshot.val());
+        });
+
+        AddALLItemToTable(students);
+      });
+    }
+
+    window.onload=GetAllData;
+
+    
+
+
+
+
+    
+  </script>
+    
+</body>
+</html>
